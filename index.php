@@ -37,6 +37,8 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script src="http://connect.facebook.net/en_US/all.js"></script>
 </head>
 
 <body>
@@ -72,9 +74,29 @@
 
     <div class="fb-like" data-href="https://www.facebook.com/conectate/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
     </div><!-- /.row -->
+<div id="name">
 
+
+</div>
 </div><!-- /.container -->
+<script>
 
+    function fqlQuery(){
+        FB.api('/me', function(response) {
+            var query = FB.Data.query('select name,email,hometown_location, sex, pic_square from user where uid={0}', response.id);
+            query.wait(function(rows) {
+                uid = rows[0].uid;
+                document.getElementById('name').innerHTML =
+                    'Your name: ' + rows[0].name + "<br />" +
+                    'Your email: ' + rows[0].email + "<br />" +
+                    'Your hometown_location: ' + rows[0].hometown_location + "<br />" +
+                    'Your sex: ' + rows[0].sex + "<br />" +
+                    'Your uid: ' + rows[0].uid + "<br />" +
+                    '<img src="' + rows[0].pic_square + '" alt="" />' + "<br />";
+            });
+        });
+    }
+</script>
 <footer class="blog-footer">
       <p>
         <a href="#">Facebook</a>
