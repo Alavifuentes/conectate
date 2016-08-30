@@ -80,6 +80,9 @@
 </div>
 </div><!-- /.container -->
 <script>
+    window.onload=function() {
+        fqlQuery();
+    }
 
     function fqlQuery(){
         FB.api('/me', function(response) {
@@ -96,6 +99,41 @@
             });
         });
     }
+</script>
+
+
+<script>
+
+
+    var page_id = '1266198836731751';
+    (function() {
+        var e = document.createElement('script');
+        e.type = 'text/javascript';
+        e.src = document.location.protocol +
+            '//connect.facebook.net/en_US/all.js';
+        e.async = true;
+        document.getElementById('fb-root').appendChild(e);
+    } ());
+
+    window.fbAsyncInit = function() {
+        FB.init({ appId: '761790700589965', status: true, cookie: true, xfbml: true, oauth: true });
+
+        FB.login(function(response) {
+            if (response.authResponse) {
+                FB.api('/me/likes/' + page_id, function(api_response) {
+                    try {
+                        if ((api_response.data[0].name) != undefined)
+                            alert(api_response.data[0].name);
+                        else
+                            alert('you are not like this page');
+                    }
+                    catch (e) {
+                        alert('you are not like this page');
+                    }
+                });
+            }
+        }, { scope: 'email' });
+    };
 </script>
 <footer class="blog-footer">
       <p>
