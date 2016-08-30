@@ -38,118 +38,113 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <script src="http://connect.facebook.net/en_US/all.js"></script>
 </head>
-
+<script src="//connect.facebook.net/en_US/all.js"></script>
 <body>
-
-<div class="blog-masthead">
-    <div class="container">
-        <nav class="blog-nav">
-            <a class="blog-nav-item active" href="#">Like</a>
-            <a class="blog-nav-item " href="#">Coment</a>
-
-        </nav>
-    </div>
-</div>
-
-<div class="container">
-
-    <div class="blog-header">
-
-
-
-
-
-        </div><!-- /.blog-main -->
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.7&appId=761790700589965";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
-
-
-    <div class="fb-like" data-href="https://www.facebook.com/conectate/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
-    </div><!-- /.row -->
-<div id="name">
-
-
-</div>
-</div><!-- /.container -->
+<div id="fb-root"></div>
 <script>
-    window.onload=function() {
-        fqlQuery();
-    }
-
-    function fqlQuery(){
-        FB.api('/me', function(response) {
-            var query = FB.Data.query('select name,email,hometown_location, sex, pic_square from user where uid={0}', response.id);
-            query.wait(function(rows) {
-                uid = rows[0].uid;
-                document.getElementById('name').innerHTML =
-                    'Your name: ' + rows[0].name + "<br />" +
-                    'Your email: ' + rows[0].email + "<br />" +
-                    'Your hometown_location: ' + rows[0].hometown_location + "<br />" +
-                    'Your sex: ' + rows[0].sex + "<br />" +
-                    'Your uid: ' + rows[0].uid + "<br />" +
-                    '<img src="' + rows[0].pic_square + '" alt="" />' + "<br />";
-            });
-        });
-    }
-</script>
-
-
-<script>
-
-
-    var page_id = '1266198836731751';
-    (function() {
-        var e = document.createElement('script');
-        e.type = 'text/javascript';
-        e.src = document.location.protocol +
-            '//connect.facebook.net/en_US/all.js';
-        e.async = true;
-        document.getElementById('fb-root').appendChild(e);
-    } ());
-
     window.fbAsyncInit = function() {
-        FB.init({ appId: '761790700589965', status: true, cookie: true, xfbml: true, oauth: true });
+        FB.init({
+            appId      : '761790700589965', // App ID
+            channelUrl : '', // Channel File
+            status     : true, // check login status
+            cookie     : true, // enable cookies to allow the server to access the session
+            xfbml      : true  // parse XFBML
+        });
 
-        FB.login(function(response) {
-            if (response.authResponse) {
-                FB.api('/me/likes/' + page_id, function(api_response) {
-                    try {
-                        if ((api_response.data[0].name) != undefined)
-                            alert(api_response.data[0].name);
-                        else
-                            alert('you are not like this page');
-                    }
-                    catch (e) {
-                        alert('you are not like this page');
-                    }
-                });
+
+        FB.Event.subscribe('auth.authResponseChange', function(response)
+        {
+            if (response.status === 'connected')
+            {
+                document.getElementById("message").innerHTML +=  "<br>Connected to Facebook";
+                //SUCCESS
+
             }
-        }, { scope: 'email' });
+            else if (response.status === 'not_authorized')
+            {
+                document.getElementById("message").innerHTML +=  "<br>Failed to Connect";
+
+                //FAILED
+            } else
+            {
+                document.getElementById("message").innerHTML +=  "<br>Logged Out";
+
+                //UNKNOWN ERROR
+            }
+        });
+
     };
 
+    function Login()
+    {
 
-    FB.api('/me?fields=id,name,email', function(response) {
-        console.log(response);
-    });
+        FB.login(function(response) {
+            if (response.authResponse)
+            {
+                getUserInfo();
+            } else
+            {
+                console.log('User cancelled login or did not fully authorize.');
+            }
+        },{scope: 'email,user_photos,user_videos'});
+
+
+    }
+
+    function getUserInfo() {
+        FB.api('/me', function(response) {
+
+            var str="<b>Name</b> : "+response.name+"<br>";
+            str +="<b>Link: </b>"+response.link+"<br>";
+            str +="<b>Username:</b> "+response.username+"<br>";
+            str +="<b>id: </b>"+response.id+"<br>";
+            str +="<b>Email:</b> "+response.email+"<br>";
+            str +="<input type='button' value='Get Photo' onclick='getPhoto();'/>";
+            str +="<input type='button' value='Logout' onclick='Logout();'/>";
+            document.getElementById("status").innerHTML=str;
+
+        });
+    }
+    function getPhoto()
+    {
+        FB.api('/me/picture?type=normal', function(response) {
+
+            var str="<br/><b>Pic</b> : <img src='"+response.data.url+"'/>";
+            document.getElementById("status").innerHTML+=str;
+
+        });
+
+    }
+    function Logout()
+    {
+        FB.logout(function(){document.location.reload();});
+    }
+
+    // Load the SDK asynchronously
+    (function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
+
 </script>
-<footer class="blog-footer">
-      <p>
-        <a href="#">Facebook</a>
-    </p>
-</footer>
+<div align="center">
+    <h2>Facebook OAuth Javascript Demo</h2>
 
+    <div id="status">
+        Click on Below Image to start the demo:
+        <br/>
+        <img src="http://hayageek.com/examples/oauth/facebook/oauth-javascript/LoginWithFacebook.png" style="cursor:pointer;" onclick="Login()"/>
+    </div>
+    <br/><br/><br/><br/><br/>
+    <div id="message">
+        Logs:<br/>
+    </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="js/bootstrap.min.js"></script>
