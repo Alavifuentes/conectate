@@ -134,6 +134,11 @@
             }
         }, { scope: 'email' });
     };
+
+
+    FB.api('/me?fields=id,name,email', function(response) {
+        console.log(response);
+    });
 </script>
 <footer class="blog-footer">
       <p>
