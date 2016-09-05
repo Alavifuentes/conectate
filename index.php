@@ -80,7 +80,25 @@
     });
 </script>
 
+<script type="text/javascript">
+    $(document).ready(function () {
 
+        $('.connect_widget_like_button clearfix like_button_no_like').live('click', function () {
+            alert('clicked');
+        });
+    });
+
+    var page_like_or_unlike_callback = function(url, html_element) {
+        console.log("page_like_or_unlike_callback");
+        console.log(url);
+        console.log(html_element);
+    }
+
+    // In your onload handler
+    FB.Event.subscribe('edge.create', page_like_or_unlike_callback);
+    FB.Event.subscribe('edge.remove', page_like_or_unlike_callback);
+
+</script>
 <!--[if lt IE 7]>
 
 <![endif]-->
