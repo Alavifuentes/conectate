@@ -18,10 +18,10 @@
 <head>
 
     <!-- Meta-Information -->
-    <title>ACME Inc.</title>
+    <title>Bm.</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="description" content="ACME Inc.">
+    <meta name="description" content="Bm">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Vendor: Bootstrap Stylesheets http://getbootstrap.com -->
@@ -35,8 +35,7 @@
 </head>
 <body ng-app="tutorialWebApp">
 <!--[if lt IE 7]>
-<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-    your browser</a> to improve your experience.</p>
+
 <![endif]-->
 
 <!-- Our Website Content Goes Here -->

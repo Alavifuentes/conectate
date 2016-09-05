@@ -1,13 +1,13 @@
 var app = angular.module('plunker', ['ezfb', 'ngRoute'])
 
 .constant('SOCIAL_PLUGINS', [
-  'like', 'share-button', 'send', 'post', 'video', 
-  'comments', 'page', 'follow', 'send-to-messenger', 'messengermessageus'
+  'like', 'share-button', 'send', 'post',
+  'comments', 'page', 'follow'
 ])
 
 .config(function (ezfbProvider, $routeProvider, SOCIAL_PLUGINS) {
   ezfbProvider.setInitParams({
-    appId: '386469651480295',
+    appId: '761790700589965',
     version: 'v2.6'
   });
   

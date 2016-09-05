@@ -7,7 +7,7 @@ var app = angular.module('plunker', ['ezfb', 'hljs'])
    * https://github.com/pc035860/angular-easyfb#configuration
    */
   ezfbProvider.setInitParams({
-    appId: '386469651480295'
+    appId: '761790700589965'
   });  
 })
 
