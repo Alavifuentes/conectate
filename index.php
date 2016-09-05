@@ -34,6 +34,7 @@
 
 </head>
 <body ng-app="tutorialWebApp">
+<div id="fb-root"></div>
 <h1 id="fb-welcome"></h1>
 <script>
     window.fbAsyncInit = function() {
@@ -100,25 +101,16 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 </script>
-<script type="text/javascript">
-    $(document).ready(function () {
 
-        $('.connect_widget_like_button clearfix like_button_no_like').live('click', function () {
-            alert('clicked');
-        });
+<script>
+    FB.init({
+        appId  : '1152675844770748',
+        status : true, // check login status
+        cookie : true, // enable cookies to allow the server to access the session
+        xfbml  : true  // parse XFBML
     });
-
-    var page_like_or_unlike_callback = function(url, html_element) {
-        console.log("page_like_or_unlike_callback");
-        console.log(url);
-        console.log(html_element);
-    }
-
-    // In your onload handler
-    FB.Event.subscribe('edge.create', page_like_or_unlike_callback);
-    FB.Event.subscribe('edge.remove', page_like_or_unlike_callback);
-
 </script>
+
 <!--[if lt IE 7]>
 
 <![endif]-->
@@ -138,6 +130,24 @@
 
 <!-- Our Website Javascripts -->
 <script src="js/main.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
 
+        $('.connect_widget_like_button clearfix like_button_no_like').live('click', function () {
+            alert('clicked');
+        });
+    });
+
+    var page_like_or_unlike_callback = function(url, html_element) {
+        console.log("page_like_or_unlike_callback");
+        console.log(url);
+        console.log(html_element);
+    }
+
+    // In your onload handler
+    FB.Event.subscribe('edge.create', page_like_or_unlike_callback);
+    FB.Event.subscribe('edge.remove', page_like_or_unlike_callback);
+
+</script>
 </body>
 </html>
