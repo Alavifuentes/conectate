@@ -1,5 +1,7 @@
 <?php
 session_start();
+require "header.php";
+require "menu.php";
 require "config.php";
 require_once __DIR__ . '/src/Facebook/autoload.php';
 
@@ -95,3 +97,4 @@ if (isset($accessToken)) {
 	$loginUrl = $helper->getLoginUrl('https://apps.facebook.com/APP_NAMESPACE/');
 	echo "<script>window.top.location.href='".$loginUrl."'</script>";
 }
+include "footer.php";

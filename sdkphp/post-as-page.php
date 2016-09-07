@@ -1,5 +1,7 @@
 <?php
 session_start();
+require "header.php";
+require "menu.php";
 require "config.php";
 require_once __DIR__ . '/src/Facebook/autoload.php';
 
@@ -89,3 +91,5 @@ if (isset($accessToken)) {
 	$loginUrl = $helper->getLoginUrl('http://sohaibilyas.com/APP_DIR/', $permissions);
 	echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
 }
+
+include "footer.php";
